@@ -12,6 +12,7 @@ public class Model {
 	
 	public Model() {
 		corsodao = new CorsoDAO(); 
+		studentedao = new StudenteDAO(); 
 		
 		
 	}

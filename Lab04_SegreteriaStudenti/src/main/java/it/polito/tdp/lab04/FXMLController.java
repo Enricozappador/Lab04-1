@@ -77,6 +77,7 @@ public class FXMLController {
     	
     	if(Matricolatxt.getText().isEmpty()) {
     		Resulttxt.appendText("Devi inserire un numero di matricola!");
+    		return; 
     	}
     	
     	try {
@@ -87,13 +88,14 @@ public class FXMLController {
         	}
     
    Studente stemp = model.AutofillStudenti(m); 
-    	String nome = stemp.getNome();
-    	String Cognome = stemp.getCognome();
+    	
     	
     	if(stemp == null) {
-    		Resulttxt.appendText("Co");
+    		Resulttxt.appendText("nessuno studente trovato");
+    		return; 
     	}
-    
+    String nome = stemp.getNome();
+    	String Cognome = stemp.getCognome();
     	Nometxt.appendText(nome);
     	Cognometxt.appendText(Cognome);
     	
@@ -118,6 +120,7 @@ public class FXMLController {
     	
     	if(Matricolatxt.getText().isEmpty()) {
     		Resulttxt.appendText("Devi inserire un numero di matricola!");
+    		return;
     	}
     	
     	try {
@@ -128,6 +131,8 @@ public class FXMLController {
         	}
     	
     	result.addAll(model.CercaCorsiStudente(m));
+    	
+    	
     	
     	for(Corso c : result) {
     		Resulttxt.appendText(c.getNomecorso()+"\n");
