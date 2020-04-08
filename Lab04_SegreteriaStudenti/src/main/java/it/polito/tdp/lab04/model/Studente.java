@@ -2,7 +2,7 @@ package it.polito.tdp.lab04.model;
 
 import java.beans.Beans;
 
-public class Studente extends Beans{
+public class Studente {
 	
 	private int matricola; 
 	private String nome; 
@@ -60,6 +60,10 @@ public class Studente extends Beans{
 		if (matricola != other.matricola)
 			return false;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return cognome+" "+nome+" "+matricola+" "+CDS+"\n";
 	} 
 	
 }

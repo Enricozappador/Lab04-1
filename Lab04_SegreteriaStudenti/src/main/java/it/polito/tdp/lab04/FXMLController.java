@@ -2,29 +2,27 @@ package it.polito.tdp.lab04;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.lab04.model.Corso;
 import it.polito.tdp.lab04.model.Model;
+import it.polito.tdp.lab04.model.Studente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+
 
 public class FXMLController {
-	
 	private Model model = new Model(); 
-	private ObservableList<String> corsi = FXCollections.observableArrayList(); 
-	
-	
+	private ObservableList<Corso> corsi = FXCollections.observableArrayList(); 
 
     @FXML
     private ResourceBundle resources;
@@ -33,7 +31,7 @@ public class FXMLController {
     private URL location;
 
     @FXML
-    private ComboBox<String> CorsoCombo;
+    private ComboBox<Corso> CorsoCombo;
 
     @FXML
     private Button CercaIscrittibtn;
@@ -42,7 +40,7 @@ public class FXMLController {
     private TextField Matricolatxt;
 
     @FXML
-    private RadioButton Autofillbtn;
+    private CheckBox Autofillbtn;
 
     @FXML
     private TextField Nometxt;
@@ -63,17 +61,107 @@ public class FXMLController {
     private Button Resetbtn;
 
     @FXML
-    void handleAutofill(ActionEvent event) {
-
+    void handleAutofill(MouseEvent event) {
+    	
+    	
+    	int m ; 
+    	
+    	Nometxt.clear();
+    	Cognometxt.clear();
+    	Resulttxt.clear();
+    	String s = Matricolatxt.getText();
+   
+    	
+    	
+     
+    	
+    	if(Matricolatxt.getText().isEmpty()) {
+    		Resulttxt.appendText("Devi inserire un numero di matricola!");
+    	}
+    	
+    	try {
+           m = Integer.parseInt(s); 
+        	} catch (NumberFormatException e) {
+        		Resulttxt.appendText("Puoi inserire solo numeri");
+        		return; 
+        	}
+    
+   Studente stemp = model.AutofillStudenti(m); 
+    	String nome = stemp.getNome();
+    	String Cognome = stemp.getCognome();
+    	
+    	if(stemp == null) {
+    		Resulttxt.appendText("Co");
+    	}
+    
+    	Nometxt.appendText(nome);
+    	Cognometxt.appendText(Cognome);
+    	
+    	
+    	
+    	
     }
 
     @FXML
     void handleCercaCorsi(ActionEvent event) {
-
+    	List<Corso> result = new ArrayList<>();
+    	int m ; 
+    	
+    	Nometxt.clear();
+    	Cognometxt.clear();
+    	Resulttxt.clear();
+    	String s = Matricolatxt.getText();
+   
+    	
+    	
+     
+    	
+    	if(Matricolatxt.getText().isEmpty()) {
+    		Resulttxt.appendText("Devi inserire un numero di matricola!");
+    	}
+    	
+    	try {
+           m = Integer.parseInt(s); 
+        	} catch (NumberFormatException e) {
+        		Resulttxt.appendText("Puoi inserire solo numeri");
+        		return; 
+        	}
+    	
+    	result.addAll(model.CercaCorsiStudente(m));
+    	
+    	for(Corso c : result) {
+    		Resulttxt.appendText(c.getNomecorso()+"\n");
+    	}
+    	
+    	
     }
 
     @FXML
     void handleCercaIscritti(ActionEvent event) {
+    	
+    	Resulttxt.clear();
+    	List<Studente> result = new ArrayList<>();
+    	Corso c = new Corso(null);
+    	if(CorsoCombo.getValue()==null) {
+    		Resulttxt.appendText("Devi selezionare un corso");
+    	}
+    	
+    	else {
+    		
+    		 
+    		try {
+    	     c = CorsoCombo.getValue();
+    	    	} catch (NumberFormatException e) {
+    	    		Resulttxt.appendText("Devi Selezionare un corso");
+    	    		return; 
+    	    	}
+    		
+    		result = model.getCorso(c); 
+    		
+    		for (Studente s : result) {
+    			Resulttxt.appendText(s.toString());
+    		}
+    	}
 
     }
 
@@ -94,24 +182,10 @@ public class FXMLController {
     	Cognometxt.clear();
     	Resulttxt.clear();
     	Autofillbtn.setSelected(false);
+    	CorsoCombo.setValue(null);
+//    	CorsoCombo.setPromptText("Corso");
 
     }
-    
-   /* public void activateAutofill() {
-    	if (Matricolatxt != null) {
-    		//Autofillbtn.setDisable(false);
-    	}
-    }
-    
-    public void fillComboBox() {
-    	
-    	corsi = model.getTuttiICorsi();
-    	
-    	//Collections.sort(corsi);
-    	
-    	CorsoCombo.getItems().addAll(corsi);
-    	
-    }*/
 
     @FXML
     void initialize() {
@@ -127,20 +201,13 @@ public class FXMLController {
         assert Resetbtn != null : "fx:id=\"Resetbtn\" was not injected: check your FXML file 'Scene.fxml'.";
         
         for (Corso c : model.getTuttiICorsi()) {
-        	corsi.add(c.getNomecorso()); 
+        	corsi.add(c); 
         }
+        Corso c = new Corso("");
         
-        corsi.add("");
+        corsi.add(c);
         
         CorsoCombo.setItems(corsi);
-        
-        
 
     }
-    
-    /*public void setModel(Model model) {
-    	this.model = model;
-    	fillComboBox();
-    //	activateAutofill(); 
-    }*/
 }

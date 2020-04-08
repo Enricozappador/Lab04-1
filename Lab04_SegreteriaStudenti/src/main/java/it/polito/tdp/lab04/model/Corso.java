@@ -2,7 +2,7 @@ package it.polito.tdp.lab04.model;
 
 import java.beans.Beans;
 
-public class Corso extends Beans {
+public class Corso{
 	
 	
 		
