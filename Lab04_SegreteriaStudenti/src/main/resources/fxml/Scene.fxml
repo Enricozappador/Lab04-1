@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.lab04.FXMLController">
    <top>
@@ -13,4 +22,58 @@
          </BorderPane.margin>
       </Label>
    </top>
+   <center>
+      <VBox spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="15.0">
+               <children>
+                  <Label text="Corsi: " />
+                  <ComboBox fx:id="CorsoCombo" onAction="#handleComboCorsi" prefWidth="150.0" promptText="Corso" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Button fx:id="CercaIscrittibtn" mnemonicParsing="false" onAction="#handleCercaIscritti" text="Cerca Iscritti Corso">
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </Button>
+            <HBox spacing="15.0">
+               <children>
+                  <Label text="Studente:" />
+                  <TextField fx:id="Matricolatxt" promptText="Inserisci la Matricola..." />
+                  <RadioButton fx:id="Autofillbtn" mnemonicParsing="false" onAction="#handleAutofill" text="Autofill" />
+                  <TextField fx:id="Nometxt" promptText="Inserisci il Nome..." />
+                  <TextField fx:id="Cognometxt" promptText="Inserisci il Cognome..." />
+               </children>
+            </HBox>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="CercaCorsibtn" mnemonicParsing="false" onAction="#handleCercaCorsi" text="Cerca Corsi" />
+                  <Button fx:id="Iscrivibtn" mnemonicParsing="false" onAction="#handleIscrivi" text="Iscrivi" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <TextArea fx:id="Resulttxt" editable="false" prefHeight="200.0" prefWidth="200.0" />
+            <HBox alignment="TOP_RIGHT">
+               <children>
+                  <Button fx:id="Resetbtn" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 </BorderPane>
