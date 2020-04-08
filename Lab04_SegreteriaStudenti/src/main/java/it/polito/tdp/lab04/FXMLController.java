@@ -1,7 +1,16 @@
 package it.polito.tdp.lab04;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.lab04.model.Corso;
+import it.polito.tdp.lab04.model.Model;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +20,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class FXMLController {
+	
+	private Model model = new Model(); 
+	private ObservableList<String> corsi = FXCollections.observableArrayList(); 
+	
+	
 
     @FXML
     private ResourceBundle resources;
@@ -19,7 +33,7 @@ public class FXMLController {
     private URL location;
 
     @FXML
-    private ComboBox<?> CorsoCombo;
+    private ComboBox<String> CorsoCombo;
 
     @FXML
     private Button CercaIscrittibtn;
@@ -75,8 +89,29 @@ public class FXMLController {
 
     @FXML
     void handleReset(ActionEvent event) {
+    	Matricolatxt.clear();
+    	Nometxt.clear();
+    	Cognometxt.clear();
+    	Resulttxt.clear();
+    	Autofillbtn.setSelected(false);
 
     }
+    
+   /* public void activateAutofill() {
+    	if (Matricolatxt != null) {
+    		//Autofillbtn.setDisable(false);
+    	}
+    }
+    
+    public void fillComboBox() {
+    	
+    	corsi = model.getTuttiICorsi();
+    	
+    	//Collections.sort(corsi);
+    	
+    	CorsoCombo.getItems().addAll(corsi);
+    	
+    }*/
 
     @FXML
     void initialize() {
@@ -90,6 +125,22 @@ public class FXMLController {
         assert Iscrivibtn != null : "fx:id=\"Iscrivibtn\" was not injected: check your FXML file 'Scene.fxml'.";
         assert Resulttxt != null : "fx:id=\"Resulttxt\" was not injected: check your FXML file 'Scene.fxml'.";
         assert Resetbtn != null : "fx:id=\"Resetbtn\" was not injected: check your FXML file 'Scene.fxml'.";
+        
+        for (Corso c : model.getTuttiICorsi()) {
+        	corsi.add(c.getNomecorso()); 
+        }
+        
+        corsi.add("");
+        
+        CorsoCombo.setItems(corsi);
+        
+        
 
     }
+    
+    /*public void setModel(Model model) {
+    	this.model = model;
+    	fillComboBox();
+    //	activateAutofill(); 
+    }*/
 }
