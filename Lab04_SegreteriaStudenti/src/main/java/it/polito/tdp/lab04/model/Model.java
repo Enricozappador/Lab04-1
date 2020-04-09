@@ -35,5 +35,13 @@ public class Model {
 	public List<Corso> CercaCorsiStudente(int matricola){
 		return studentedao.CercaCorsiStudente(matricola); 
 	}
+	
+	public boolean isStudenteIscritto(Studente studente, Corso corso) {
+		return studentedao.isStudenteIscritto(studente, corso); 
+	}
+	
+	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
+		return corsodao.inscriviStudenteACorso(studente, corso); 
+	}
 
 }

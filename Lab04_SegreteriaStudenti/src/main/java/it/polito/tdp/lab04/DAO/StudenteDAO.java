@@ -64,4 +64,33 @@ public class StudenteDAO {
 		
 	return result; 
 	}
+	
+	public boolean isStudenteIscritto(Studente studente, Corso corso){
+		String sql= " SELECT * FROM iscrizione WHERE codins = ? AND matricola = ?";
+		boolean flag = false; 
+		int count = 0; 
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, corso.getCodins());
+			st.setInt(2, studente.getMatricola());
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+			count++; 
+			}
+			conn.close();
+			
+			}catch (SQLException e) {
+				// e.printStackTrace();
+				throw new RuntimeException("Errore Db", e);
+			}
+		
+		
+		if(count>0) {
+			flag = true; 
+		}
+		return flag; 
+	}
 }

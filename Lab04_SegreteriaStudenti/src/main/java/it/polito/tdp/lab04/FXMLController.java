@@ -177,7 +177,57 @@ public class FXMLController {
 
     @FXML
     void handleIscrivi(ActionEvent event) {
-
+    	
+    	Resulttxt.clear();
+    	
+    	if(CorsoCombo.getValue()==null) {
+    		Resulttxt.appendText("Devi selezionare un corso");
+    		return; 
+    	}
+    	
+    	boolean flag; 
+    	boolean secondflag; 
+//    	String codins= CorsoCombo.getValue().getCodins(); 
+    	String matricolas = Matricolatxt.getText();
+    	int matricola; 
+    	
+    	
+    	if(Matricolatxt.getText().isEmpty()) {
+    		Resulttxt.appendText("Devi inserire un numero di matricola!");
+    		return;
+    	}
+    	
+    	try {
+           matricola = Integer.parseInt(matricolas); 
+        	} catch (NumberFormatException e) {
+        		Resulttxt.appendText("Puoi inserire solo numeri");
+        		return; 
+        	}
+    	
+    	Corso c = CorsoCombo.getValue(); 
+    	Studente s = model.AutofillStudenti(matricola); 
+    	
+    	flag = model.isStudenteIscritto(s, c); 
+    	
+    	if(flag==true) {
+    		Resulttxt.appendText("Lo studente è iscritto al corso");
+    		return;
+    	}
+    	
+    	else {
+    		
+    		secondflag = model.inscriviStudenteACorso(s, c);
+    		
+    		if(secondflag == true) {
+    			Resulttxt.appendText("Lo studente "+s+" è stato isrcitto al corso "+c);
+    		}
+    		else if(secondflag==false) {
+    			Resulttxt.appendText("Errore nell'iscrizione dello studente!");
+    		}
+    		
+    	}
+    	
+    	
     }
 
     @FXML
